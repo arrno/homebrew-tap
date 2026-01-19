@@ -3,7 +3,7 @@ cask "bfast" do
   name "bfast"
   desc "CLI badger for registering repos with blazingly.fast and inserting the badge"
   homepage "https://blazingly.fast"
-  version "0.0.1"
+  version "0.0.2"
 
   livecheck do
     skip "Auto-generated on release."
@@ -14,22 +14,28 @@ cask "bfast" do
   on_macos do
     on_intel do
       url "https://github.com/arrno/bfast/releases/download/v#{version}/bfast_#{version}_darwin_amd64.tar.gz"
-      sha256 "04a696af2456d93a75b22b361c0a7d7626afea9ba3383a1f28ed7761030babdf"
+      sha256 "b48f2c56c82ffa9a919126330c722798a10ab676d112d38c7647ea64630c49ae"
     end
     on_arm do
       url "https://github.com/arrno/bfast/releases/download/v#{version}/bfast_#{version}_darwin_arm64.tar.gz"
-      sha256 "64b82426816046d778439e9c1da08b4c77c2f62e098b8dbd3163ae2967e9fc9e"
+      sha256 "ab90f8da27f1b2aab4510a9eecb3cc960da702debdbad877bd5b4a5b57935447"
     end
   end
 
   on_linux do
     on_intel do
       url "https://github.com/arrno/bfast/releases/download/v#{version}/bfast_#{version}_linux_amd64.tar.gz"
-      sha256 "9351443750f0542fbe6c1a44e2157385381e67a9fb28a35ec47f93c1ae6c96af"
+      sha256 "d75829f3821a04966b913b2462f169c98f06e57230ef99d9054fe6641ce7cabc"
     end
     on_arm do
       url "https://github.com/arrno/bfast/releases/download/v#{version}/bfast_#{version}_linux_arm64.tar.gz"
-      sha256 "f41d92adcf4b1d9a4308e601a7efb01dd1d7cd074e6744f7151a7b3308a108c4"
+      sha256 "d471f886e9780a2cbe80db3e7353b135c8bcda3ee85435c468a1b75d25d74cb2"
+    end
+  end
+
+  postflight do
+    if OS.mac?
+        system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/bfast"]
     end
   end
 
